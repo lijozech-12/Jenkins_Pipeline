@@ -6,15 +6,22 @@ pipeline {
   maven 'Maven3'
   }
   stages {
-    stage ('Build') {
-      steps {
-      sh 'mvn clean install -f MyWebApp/pom.xml'
-      }
-    }
+    stage('Checkout'){
+            steps{
+            checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '36581b03-c283-4a3c-a9ba-7e007faaa68e', url: 'https://github.com/lijozech-12/Jenkins_Pipeline']]])
+            }
+        }
+    
+        stage('Build'){
+            steps{
+             bat 'mvn clean install -f WEB_App/pom.xml'
+            }
+        
+        }
     stage ('Code Quality') {
       steps {
         withSonarQubeEnv('SonarQube') {
-        sh 'mvn -f MyWebApp/pom.xml sonar:sonar'
+        sh 'mvn -f WEB_App/pom.xml sonar:sonar'
         }
       }
     }
