@@ -1,2 +1,4 @@
 # Jenkins_Pipeline
 Creating a Jenkins pipeline for Java Web application
+
+![This is an image](
